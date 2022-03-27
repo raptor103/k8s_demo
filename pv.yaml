@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: host-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    # can be used only by a single node, there are other modes
+    - ReadWriteOnce
+  # hostPath is something like a local simulation of a real PV
+  # here could be e.g. awsElasticBlockStore
+  hostPath:
+    # path in volume - name up to me
+    path: /data
+    type: DirectoryOrCreate

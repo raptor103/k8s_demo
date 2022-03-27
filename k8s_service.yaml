@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    # has to match the template metadata labels in k8s_deployment.yaml
+    # this is how the service is bound to deployment
+    app: flask
+  ports:
+    - protocol: TCP
+      # exposed port
+      port: 8000
+      # port inside container
+      targetPort: 8000
+  # the service is load balancing
+  type: LoadBalancer

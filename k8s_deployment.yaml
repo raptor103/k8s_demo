@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  # labels are custom key value pairs
+  labels:
+    app: my-flask-app
+spec:
+  # how many pods
+  replicas: 1
+  # deployment controls pods via selectors
+  # -> has to match label in template of pod
+  selector:
+    matchLabels:
+      app: flask
+  # template for pod
+  template:
+    metadata:
+      labels:
+        # custom key value pairs
+        app: flask
+    spec:
+      containers:
+      - name: my-flask-container
+        # my saved image on dockerhub
+        # image is not re-downloaded unless tag changes
+        # this can be changed with:
+        # imagePullPolicy: Always
+        image: jirkako/flask_k8s_example:6
+        volumeMounts:
+          # path inside my container that I want to have as volume -> dockerfile dir is /app
+          - mountPath: /app/data
+            name: my-volume
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            # matches the name in pvc yaml
+            claimName: host-pvc
