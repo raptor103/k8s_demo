@@ -12,12 +12,18 @@ spec:
   # -> has to match label in template of pod
   selector:
     matchLabels:
+      # this is a selector. We can define pods that we want to controll with this deployment.
+      # labels are key value pair. Both completely arbitrary and up to us.
+      # the lable tells the deployment which pods should be controlled by the deployment
+      # this selector will controll all pods with label flask
       app: flask
   # template for pod
   template:
     metadata:
       labels:
         # custom key value pairs
+        # this has to match the selector 
+        # this is the label for the pods (number of pods is influenced by no of replicas)
         app: flask
     spec:
       containers:
